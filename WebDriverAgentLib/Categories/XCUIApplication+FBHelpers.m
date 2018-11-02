@@ -69,6 +69,14 @@ const static NSTimeInterval FBMinimumAppSwitchWait = 3.0;
   return snapshotTree.copy;
 }
 
+//- (NSDictionary *)fb_tree_first
+//{
+//  [self fb_waitUntilSnapshotIsStable];
+//  return [self.class dictionaryForFirstElement:self.fb_lastSnapshot];
+//}
+
+
+
 - (NSDictionary *)fb_accessibilityTree
 {
   [self fb_waitUntilSnapshotIsStable];
@@ -106,6 +114,34 @@ const static NSTimeInterval FBMinimumAppSwitchWait = 3.0;
   return info;
 }
 
+/*
++ (NSDictionary *)dictionaryForFirstElement:(XCElementSnapshot *)snapshot
+{
+  NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
+  info[@"type"] = [FBElementTypeTransformer shortStringWithElementType:snapshot.elementType];
+  info[@"rawIdentifier"] = FBValueOrNull([snapshot.identifier isEqual:@""] ? nil : snapshot.identifier);
+  info[@"name"] = FBValueOrNull(snapshot.wdName);
+  info[@"value"] = FBValueOrNull(snapshot.wdValue);
+  info[@"label"] = FBValueOrNull(snapshot.wdLabel);
+  info[@"rect"] = [XCUIApplication formattedRectWithFrame:snapshot.wdFrame];
+  info[@"frame"] = NSStringFromCGRect(snapshot.wdFrame);
+  info[@"isEnabled"] = [@([snapshot isWDEnabled]) stringValue];
+  info[@"isVisible"] = [@([snapshot isWDVisible]) stringValue];
+  return info;
+}
+
+
+
++ (NSDictionary *)formattedRectWithFrame:(CGRect)frame
+{
+  return @{
+    @"x": @(isinf(CGRectGetMinX(frame)) ? 0: CGRectGetMinX(frame)),
+    @"y": @(isinf(CGRectGetMinY(frame)) ? 0: CGRectGetMinY(frame)),
+    @"width": @(isinf(CGRectGetWidth(frame)) ? 0 : CGRectGetWidth(frame)),
+    @"height": @(isinf(CGRectGetHeight(frame)) ? 0 : CGRectGetHeight(frame)),
+  };
+}
+*/
 + (NSDictionary *)accessibilityInfoForElement:(XCElementSnapshot *)snapshot
 {
   BOOL isAccessible = [snapshot isWDAccessible];
