@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSDictionary *)fb_tree;
 
-// - (NSDictionary *)fb_tree_first;
+- (NSDictionary *)fb_tree_first;
 
 /**
  Return application elements accessibility tree in form of nested dictionaries
