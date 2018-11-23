@@ -40,24 +40,43 @@ class App extends React.Component {
   }
 
   fetchScreenshot() {
-    HTTP.get(ORIENTATION_ENDPOINT, (orientation) => {
-      orientation = orientation.value;
-      HTTP.get(SCREENSHOT_ENDPOINT, (base64EncodedImage) => {
-        base64EncodedImage = base64EncodedImage.value;
-        ScreenshotFactory.createScreenshot(orientation, base64EncodedImage, (screenshot) => {
-          this.setState({
-            screenshot: screenshot,
+    HTTP.get(
+      'status', (status_result) => {
+        var session_id = status_result.sessionId;
+        HTTP.get('session/' + session_id + '/' + ORIENTATION_ENDPOINT, (orientation) => {
+          // orientation = orientation.value;
+          orientation = 'disable_orientation';
+          HTTP.get(SCREENSHOT_ENDPOINT, (base64EncodedImage) => {
+            base64EncodedImage = base64EncodedImage.value;
+            ScreenshotFactory.createScreenshot(orientation, base64EncodedImage, (screenshot) => {
+              this.setState({
+                screenshot: screenshot,
+              });
+            });
           });
         });
-      });
     });
   }
 
   fetchTree() {
     HTTP.get(TREE_ENDPOINT, (treeInfo) => {
       treeInfo = treeInfo.value;
-      this.setState({
-        rootNode: TreeNode.buildNode(treeInfo, new TreeContext()),
+      var rootNodeOrignal = TreeNode.buildNode(treeInfo, new TreeContext())
+      HTTP.get(
+        'status', (status_result) => {
+          var session_id = status_result.sessionId;
+          HTTP.get('session/' + session_id + '/' + ORIENTATION_ENDPOINT, (orientation) => {
+            orientation = orientation.value;
+            if ((orientation === 'LANDSCAPE') && (rootNodeOrignal.rect.size.width < rootNodeOrignal.rect.size.height)) {
+              console.log('Swap rootNode width and height for LANDSCAPE orientation\n', rootNodeOrignal);
+              var widthTmp = rootNodeOrignal.rect.size.width;
+              rootNodeOrignal.rect.size.width = rootNodeOrignal.rect.size.height;
+              rootNodeOrignal.rect.size.height = widthTmp;
+            }
+            this.setState({
+              rootNode: rootNodeOrignal,
+            });
+         });
       });
     });
   }

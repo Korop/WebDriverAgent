@@ -127,10 +127,18 @@ class Screen extends React.Component {
       'status', (status_result) => {
         var session_id = status_result.sessionId;
         HTTP.post(
-          'session/' + session_id + '/wda/tap/0',
+          //'session/' + session_id + '/wda/tap/0',
+          'session/' + session_id + '/wda/touch/perform',
           JSON.stringify({
-            'x': x,
-            'y': y,
+            'actions': [
+              {
+                'action': 'tap',
+                'options': {
+                  'x': x,
+                  'y': y
+                }
+              }
+            ]
           }),
           (tap_result) => {
             this.props.refreshApp();
