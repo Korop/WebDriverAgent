@@ -65,18 +65,36 @@ class App extends React.Component {
       HTTP.get(
         'status', (status_result) => {
           var session_id = status_result.sessionId;
-          HTTP.get('session/' + session_id + '/' + ORIENTATION_ENDPOINT, (orientation) => {
-            orientation = orientation.value;
-            if ((orientation === 'LANDSCAPE') && (rootNodeOrignal.rect.size.width < rootNodeOrignal.rect.size.height)) {
+          HTTP.get('session/' + session_id + '/window/size', (windowSize) => {
+            windowSize = windowSize.value;
+            if ((windowSize.width > windowSize.height) && (rootNodeOrignal.rect.size.width < rootNodeOrignal.rect.size.height)) {
               console.log('Swap rootNode width and height for LANDSCAPE orientation\n', rootNodeOrignal);
               var widthTmp = rootNodeOrignal.rect.size.width;
               rootNodeOrignal.rect.size.width = rootNodeOrignal.rect.size.height;
               rootNodeOrignal.rect.size.height = widthTmp;
+              //frame format is string like: "{{0, 0}, {768, 1024}}"
+              rootNodeOrignal.attributes.rect = '{{0, 0}, {' + rootNodeOrignal.rect.size.width  + ', ' + rootNodeOrignal.rect.size.height + '}}';
+
             }
             this.setState({
-              rootNode: rootNodeOrignal,
+              windowSize: windowSize
             });
-         });
+            this.setState({
+              rootNode: rootNodeOrignal
+            });
+           //  HTTP.get('session/' + session_id + '/' + ORIENTATION_ENDPOINT, (orientation) => {
+           //    orientation = orientation.value;
+           //    if ((orientation === 'LANDSCAPE') && (rootNodeOrignal.rect.size.width < rootNodeOrignal.rect.size.height)) {
+           //      console.log('Swap rootNode width and height for LANDSCAPE orientation\n', rootNodeOrignal);
+           //      var widthTmp = rootNodeOrignal.rect.size.width;
+           //      rootNodeOrignal.rect.size.width = rootNodeOrignal.rect.size.height;
+           //      rootNodeOrignal.rect.size.height = widthTmp;
+           //    }
+           //    this.setState({
+           //      rootNode: rootNodeOrignal,
+           //    });
+           // });
+          });
       });
     });
   }
@@ -88,6 +106,7 @@ class App extends React.Component {
           highlightedNode={this.state.highlightedNode}
           screenshot={this.state.screenshot}
           rootNode={this.state.rootNode}
+          windowSize={this.state.windowSize}
           refreshApp={() => { this.refreshApp(); }}
           fetchScreenshot={() => { this.fetchScreenshot(); }} />
         <Tree

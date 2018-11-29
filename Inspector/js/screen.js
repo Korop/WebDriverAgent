@@ -113,7 +113,7 @@ class Screen extends React.Component {
 
   scaleCoord(coord) {
     var screenshot = this.screenshot();
-    var pxPtScale = screenshot.width / this.props.rootNode.rect.size.width;
+    var pxPtScale = screenshot.width / this.props.windowSize.width;
     return coord / screenshot.scale / pxPtScale;
   }
 
@@ -229,7 +229,7 @@ class Screen extends React.Component {
     var scale = screenshot.scale;
     // Rect attribute use pt, but screenshot use px.
     // So caculate its px/pt scale automatically.
-    var pxPtScale = screenshot.width / this.props.rootNode.rect.size.width;
+    var pxPtScale = screenshot.width / this.props.windowSize.width;
 
     // hide nodes with rect out of bound
     if (rect.origin.x < 0 || rect.origin.x * pxPtScale >= screenshot.width ||
