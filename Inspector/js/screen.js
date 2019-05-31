@@ -91,29 +91,71 @@ class Screen extends React.Component {
     toX = this.scaleCoord(toX);
     toY = this.scaleCoord(toY);
 
-    HTTP.get(
-      'status', (status_result) => {
-        var session_id = status_result.sessionId;
-        HTTP.post(
-          'session/' + session_id + '/wda/element/0/dragfromtoforduration',
-          JSON.stringify({
-            'fromX': fromX,
-            'fromY': fromY,
-            'toX': toX,
-            'toY': toY,
-            'duration': params.duration,
-          }),
-          (tap_result) => {
-            this.props.refreshApp();
-          },
-        );
-      },
-    );
+    if (this.props.fixedOrientation) {
+      HTTP.get(
+        'status', (status_result) => {
+          var session_id = status_result.sessionId;
+          HTTP.post(
+            'session/' + session_id + '/wda/touch/perform',
+            JSON.stringify({
+              'actions': [
+                {
+                  'action': 'longPress',
+                  'options': {
+                    'x': fromX,
+                    'y': fromY
+                  }
+                },
+                {
+                  'action': 'wait',
+                  'options': {
+                    'duration': params.duration,
+                    'ms': params.duration,
+                  }
+                },
+                {
+                  'action': 'moveTo',
+                  'options': {
+                    'x': toX,
+                    'y': toY
+                  }
+                },
+                {
+                  'action': 'release'
+                },
+              ]
+            }),
+            (tap_result) => {
+              this.props.refreshApp();
+            },
+          );
+        },
+      );
+    } else {
+      HTTP.get(
+        'status', (status_result) => {
+          var session_id = status_result.sessionId;
+          HTTP.post(
+            'session/' + session_id + '/wda/element/0/dragfromtoforduration',
+            JSON.stringify({
+              'fromX': fromX,
+              'fromY': fromY,
+              'toX': toX,
+              'toY': toY,
+              'duration': params.duration,
+            }),
+            (tap_result) => {
+              this.props.refreshApp();
+            },
+          );
+        },
+      );
+    }
   }
 
   scaleCoord(coord) {
     var screenshot = this.screenshot();
-    var pxPtScale = screenshot.width / this.props.rootNode.rect.size.width;
+    var pxPtScale = screenshot.width / this.props.windowSize.width;
     return coord / screenshot.scale / pxPtScale;
   }
 
@@ -127,10 +169,18 @@ class Screen extends React.Component {
       'status', (status_result) => {
         var session_id = status_result.sessionId;
         HTTP.post(
-          'session/' + session_id + '/wda/tap/0',
+          //'session/' + session_id + '/wda/tap/0',
+          'session/' + session_id + '/wda/touch/perform',
           JSON.stringify({
-            'x': x,
-            'y': y,
+            'actions': [
+              {
+                'action': 'tap',
+                'options': {
+                  'x': x,
+                  'y': y
+                }
+              }
+            ]
           }),
           (tap_result) => {
             this.props.refreshApp();
@@ -221,7 +271,7 @@ class Screen extends React.Component {
     var scale = screenshot.scale;
     // Rect attribute use pt, but screenshot use px.
     // So caculate its px/pt scale automatically.
-    var pxPtScale = screenshot.width / this.props.rootNode.rect.size.width;
+    var pxPtScale = screenshot.width / this.props.windowSize.width;
 
     // hide nodes with rect out of bound
     if (rect.origin.x < 0 || rect.origin.x * pxPtScale >= screenshot.width ||

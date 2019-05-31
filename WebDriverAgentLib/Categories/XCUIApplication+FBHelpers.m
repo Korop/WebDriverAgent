@@ -69,6 +69,21 @@ const static NSTimeInterval FBMinimumAppSwitchWait = 3.0;
   return snapshotTree.copy;
 }
 
+- (NSDictionary *)fb_tree_first
+{
+  if ([FBConfiguration shouldUseTestManagerForVisibilityDetection]) {
+    [self fb_waitUntilSnapshotIsStable];
+  }
+  // If getting the snapshot with attributes fails we use the snapshot with lazily initialized attributes
+  // XCElementSnapshot *snapshot = self.fb_snapshotWithAttributes ?: self.fb_lastSnapshot;
+  XCElementSnapshot *snapshot = self.fb_lastSnapshot;
+
+  // return [self.class dictionaryForElement:snapshot recursive:NO];
+  return [self.class dictionaryForFirstElement:snapshot];
+}
+
+
+
 - (NSDictionary *)fb_accessibilityTree
 {
   [self fb_waitUntilSnapshotIsStable];
@@ -105,6 +120,40 @@ const static NSTimeInterval FBMinimumAppSwitchWait = 3.0;
   }
   return info;
 }
+
+
++ (NSDictionary *)dictionaryForFirstElement:(XCElementSnapshot *)snapshot
+{
+  NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
+  info[@"type"] = [FBElementTypeTransformer shortStringWithElementType:snapshot.elementType];
+  info[@"rawIdentifier"] = FBValueOrNull([snapshot.identifier isEqual:@""] ? nil : snapshot.identifier);
+  info[@"name"] = FBValueOrNull(snapshot.wdName);
+  info[@"value"] = FBValueOrNull(snapshot.wdValue);
+  info[@"label"] = FBValueOrNull(snapshot.wdLabel);
+  info[@"rect"] = FBwdRectNoInf(snapshot.wdRect);
+  info[@"frame"] = NSStringFromCGRect(snapshot.wdFrame);
+  info[@"isEnabled"] = [@([snapshot isWDEnabled]) stringValue];
+  info[@"isVisible"] = [@([snapshot isWDVisible]) stringValue];
+  
+  NSArray *childElements = snapshot.children;
+  if ([childElements count]) {
+    XCElementSnapshot *childSnapshot = childElements[0];
+    return [self dictionaryForElement:childSnapshot recursive:NO].copy;
+  }
+  
+  return info.copy;
+}
+
+//+ (NSDictionary *)formattedRectWithFrame:(CGRect)frame
+//{
+//  return @{
+//    @"x": @(isinf(CGRectGetMinX(frame)) ? 0: CGRectGetMinX(frame)),
+//    @"y": @(isinf(CGRectGetMinY(frame)) ? 0: CGRectGetMinY(frame)),
+//    @"width": @(isinf(CGRectGetWidth(frame)) ? 0 : CGRectGetWidth(frame)),
+//    @"height": @(isinf(CGRectGetHeight(frame)) ? 0 : CGRectGetHeight(frame)),
+//  };
+//}
+
 
 + (NSDictionary *)accessibilityInfoForElement:(XCElementSnapshot *)snapshot
 {

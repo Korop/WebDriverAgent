@@ -46,7 +46,8 @@ static NSString *const SOURCE_FORMAT_DESCRIPTION = @"description";
   if ([sourceType caseInsensitiveCompare:SOURCE_FORMAT_XML] == NSOrderedSame) {
     result = application.fb_xmlRepresentation;
   } else if ([sourceType caseInsensitiveCompare:SOURCE_FORMAT_JSON] == NSOrderedSame) {
-    result = application.fb_tree;
+    //result = application.fb_tree;
+    result = application.fb_tree_first;
   } else if ([sourceType caseInsensitiveCompare:SOURCE_FORMAT_DESCRIPTION] == NSOrderedSame) {
     result = application.fb_descriptionRepresentation;
   } else {

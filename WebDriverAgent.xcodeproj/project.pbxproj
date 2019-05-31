@@ -318,7 +318,6 @@
 		EE55B3271D1D54CF003AAAEC /* FBScrollingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EE55B3261D1D54CF003AAAEC /* FBScrollingTests.m */; };
 		EE5A24421F136D360078B1D9 /* FBXCodeCompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5A24411F136C8D0078B1D9 /* FBXCodeCompatibility.m */; };
 		EE6A89261D0B19E60083E92B /* FBSessionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6A89251D0B19E60083E92B /* FBSessionTests.m */; };
-		EE6A892B1D0B25820083E92B /* FBApplicationDouble.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6A89281D0B257B0083E92B /* FBApplicationDouble.m */; };
 		EE6A892D1D0B2AF40083E92B /* FBErrorBuilderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6A892C1D0B2AF40083E92B /* FBErrorBuilderTests.m */; };
 		EE6A89371D0B35920083E92B /* FBFailureProofTestCaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6A89361D0B35920083E92B /* FBFailureProofTestCaseTests.m */; };
 		EE6A893A1D0B38640083E92B /* FBFailureProofTestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = EE6A89381D0B38640083E92B /* FBFailureProofTestCase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -828,7 +827,7 @@
 		EEE9B4711CD02B88009D2030 /* FBRunLoopSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRunLoopSpinner.m; sourceTree = "<group>"; };
 		EEEC7C901F21F27A0053426C /* FBPredicate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBPredicate.h; sourceTree = "<group>"; };
 		EEEC7C911F21F27A0053426C /* FBPredicate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBPredicate.m; sourceTree = "<group>"; };
-		EEF9882A1C486603005CA669 /* WebDriverAgentRunner.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebDriverAgentRunner.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEF9882A1C486603005CA669 /* ApplicationAgentRunner.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApplicationAgentRunner.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -931,7 +930,7 @@
 			isa = PBXGroup;
 			children = (
 				EE836C021C0F118600D87246 /* UnitTests.xctest */,
-				EEF9882A1C486603005CA669 /* WebDriverAgentRunner.xctest */,
+				EEF9882A1C486603005CA669 /* ApplicationAgentRunner.xctest */,
 				EE158A991CBD452B00A3E3F0 /* WebDriverAgentLib.framework */,
 				EE9B75D41CF7956C00275851 /* IntegrationApp.app */,
 				EE9B75EC1CF7956C00275851 /* IntegrationTests_1.xctest */,
@@ -1792,7 +1791,7 @@
 			);
 			name = WebDriverAgentRunner;
 			productName = XCTUITestRunner;
-			productReference = EEF9882A1C486603005CA669 /* WebDriverAgentRunner.xctest */;
+			productReference = EEF9882A1C486603005CA669 /* ApplicationAgentRunner.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -2046,7 +2045,6 @@
 				EE9B76591CF7987800275851 /* FBRouteTests.m in Sources */,
 				7139145C1DF01A12005896C2 /* NSExpressionFBFormatTests.m in Sources */,
 				71A224E81DE326C500844D55 /* NSPredicateFBFormatTests.m in Sources */,
-				EE6A892B1D0B25820083E92B /* FBApplicationDouble.m in Sources */,
 				EE6A892D1D0B2AF40083E92B /* FBErrorBuilderTests.m in Sources */,
 				712A0C851DA3E459007D02E5 /* FBXPathTests.m in Sources */,
 				ADBC39981D07842800327304 /* XCUIElementDouble.m in Sources */,
@@ -2206,7 +2204,7 @@
 					"$(SDKROOT)/usr/include/libxml2",
 					"$(SRCROOT)/Modules",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2260,7 +2258,7 @@
 					"$(SDKROOT)/usr/include/libxml2",
 					"$(SRCROOT)/Modules",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2273,6 +2271,7 @@
 			baseConfigurationReference = EEE5CABF1C80361500CBBDD9 /* ProjectSettings.xcconfig */;
 			buildSettings = {
 				CLANG_STATIC_ANALYZER_MODE = deep;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -2289,10 +2288,10 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = WebDriverAgentLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.WebDriverAgentLib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.auto.AppDriverAgentLib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2319,10 +2318,10 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = WebDriverAgentLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.WebDriverAgentLib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.auto.AppDriverAgentLib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2357,7 +2356,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = WebDriverAgentTests/IntegrationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.IntegrationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2375,7 +2374,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = WebDriverAgentTests/IntegrationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.IntegrationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2392,7 +2391,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = WebDriverAgentTests/IntegrationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.IntegrationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2409,7 +2408,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = WebDriverAgentTests/UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.WebDriverAgentCoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2424,7 +2423,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = WebDriverAgentTests/UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.WebDriverAgentCoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2468,7 +2467,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = WebDriverAgentTests/IntegrationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.IntegrationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2485,7 +2484,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = WebDriverAgentTests/IntegrationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.IntegrationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2504,14 +2503,14 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = WebDriverAgentRunner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.WebDriverAgentRunner;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.auto.ApplicationAgentRunner;
+				PRODUCT_NAME = ApplicationAgentRunner;
 				USES_XCTRUNNER = YES;
 			};
 			name = Debug;
@@ -2526,14 +2525,14 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = WebDriverAgentRunner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.WebDriverAgentRunner;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.auto.ApplicationAgentRunner;
+				PRODUCT_NAME = ApplicationAgentRunner;
 				USES_XCTRUNNER = YES;
 			};
 			name = Release;
