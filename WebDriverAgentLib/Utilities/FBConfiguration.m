@@ -26,9 +26,9 @@ static BOOL FBShouldUseCompactResponses = YES;
 static BOOL FBShouldWaitForQuiescence = NO;
 static NSString *FBElementResponseAttributes = @"type,label";
 static NSUInteger FBMaxTypingFrequency = 60;
-static NSUInteger FBMjpegServerScreenshotQuality = 0; // 25
+static NSUInteger FBMjpegServerScreenshotQuality = 10;
 static NSUInteger FBMjpegServerFramerate = 10;
-static NSUInteger FBScreenshotQuality = 1;
+static NSUInteger FBScreenshotQuality = 2;
 static NSUInteger FBMjpegScalingFactor = 100;
 
 @implementation FBConfiguration
